@@ -183,11 +183,11 @@ class ControlMessageController implements MessageComponentInterface
 
                 $data->subdomain = $subdomain;
 
-                $connectionInfo = $this->connectionManager->storeConnection($data->host, $data->subdomain, $data->server_host, $connection);
-
-                $this->connectionManager->limitConnectionLength($connectionInfo, config('expose.admin.maximum_connection_length'));
-
-                return $this->resolveConnectionMessage($connectionInfo, $user);
+                return $this->connectionManager->storeConnection($data->host, $data->subdomain, $data->server_host, $connection)
+                    ->then(function ($connectionInfo) use ($user) {
+                        $this->connectionManager->limitConnectionLength($connectionInfo, config('expose.admin.maximum_connection_length'));
+                        return $this->resolveConnectionMessage($connectionInfo, $user);
+                    });
             })
             ->then(function ($connectionInfo) use ($connection, $user) {
                 $connection->send(json_encode([

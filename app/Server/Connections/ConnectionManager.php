@@ -10,6 +10,9 @@ use App\Http\QueryParameters;
 use App\Server\Exceptions\NoFreePortAvailable;
 use Ratchet\ConnectionInterface;
 use React\EventLoop\LoopInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
+use function React\Promise\resolve;
 use React\Socket\Server;
 
 class ConnectionManager implements ConnectionManagerContract
@@ -53,30 +56,38 @@ class ConnectionManager implements ConnectionManagerContract
         });
     }
 
-    public function storeConnection(string $host, ?string $subdomain, ?string $serverHost, ConnectionInterface $connection): ControlConnection
+    public function storeConnection(string $host, ?string $subdomain, ?string $serverHost, ConnectionInterface $connection): PromiseInterface
     {
         $clientId = (string) uniqid();
+        $authToken = $this->getAuthTokenFromConnection($connection);
 
         $connection->client_id = $clientId;
 
-        $storedConnection = new ControlConnection(
-            $connection,
-            $host,
-            $subdomain ?? $this->subdomainGenerator->generateSubdomain(),
-            $clientId,
-            $serverHost,
-            $this->getAuthTokenFromConnection($connection)
-        );
+        if ($subdomain != null)
+        {
+            $controlConnection = new ControlConnection($connection, $host, $subdomain, $clientId, $serverHost, $authToken);
+            $this->storeControlConnection($controlConnection);
+            return resolve($controlConnection);
+        }
+        else
+        {
+            $queryParams = QueryParameters::create($connection->httpRequest)->all();
 
-        $this->connections[] = $storedConnection;
+            return $this->subdomainGenerator->generateSubdomain($queryParams)
+                ->then(function ($subdomain) use ($connection, $host, $clientId, $serverHost, $authToken) {
+                    $controlConnection = new ControlConnection($connection, $host, $subdomain, $clientId, $serverHost, $authToken);
+                    $this->storeControlConnection($controlConnection);
+                    return $controlConnection;
+                });
+        }
+    }
 
-        $this->statisticsCollector->siteShared($this->getAuthTokenFromConnection($connection));
-
-        $this->logger->logSubdomain($storedConnection->authToken, $storedConnection->subdomain);
-
-        $this->performConnectionCallback($storedConnection);
-
-        return $storedConnection;
+    private function storeControlConnection(ControlConnection $connection)
+    {
+        $this->connections[] = $connection;
+        $this->statisticsCollector->siteShared($connection->authToken ?: null);
+        $this->logger->logSubdomain($connection->authToken, $connection->subdomain);
+        $this->performConnectionCallback($connection);
     }
 
     protected function performConnectionCallback(ControlConnection $connection)

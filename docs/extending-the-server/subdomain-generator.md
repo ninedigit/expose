@@ -11,13 +11,15 @@ The default generator looks like this:
 
 ```php
 use Illuminate\Support\Str;
+use React\Promise\PromiseInterface;
+use function React\Promise\resolve;
 use App\Contracts\SubdomainGenerator;
 
 class RandomSubdomainGenerator implements SubdomainGenerator
 {
-    public function generateSubdomain(): string
+    public function generateSubdomain(array $queryParams): PromiseInterface
     {
-        return strtolower(Str::random(10));
+        return resolve(strtolower(Str::random(10)));
     }
 }
 ```

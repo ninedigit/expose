@@ -5,10 +5,11 @@ namespace App\Contracts;
 use App\Server\Connections\ControlConnection;
 use App\Server\Connections\HttpConnection;
 use Ratchet\ConnectionInterface;
+use React\Promise\PromiseInterface;
 
 interface ConnectionManager
 {
-    public function storeConnection(string $host, ?string $subdomain, ?string $serverHost, ConnectionInterface $connection): ControlConnection;
+    public function storeConnection(string $host, ?string $subdomain, ?string $serverHost, ConnectionInterface $connection): PromiseInterface;
 
     public function storeTcpConnection(int $port, ConnectionInterface $connection): ControlConnection;
 
