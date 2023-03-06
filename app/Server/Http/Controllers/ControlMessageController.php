@@ -187,6 +187,15 @@ class ControlMessageController implements MessageComponentInterface
                     ->then(function ($connectionInfo) use ($user) {
                         $this->connectionManager->limitConnectionLength($connectionInfo, config('expose.admin.maximum_connection_length'));
                         return $this->resolveConnectionMessage($connectionInfo, $user);
+                    }, function ($e) use ($connection) {
+                        $connection->send(json_encode([
+                            'event' => 'authenticationFailed',
+                            'data' => [
+                                'message' => $e->getMessage(),
+                            ]
+                        ]));
+                        return \React\Promise\reject(e);
+                        $connection->close();
                     });
             })
             ->then(function ($connectionInfo) use ($connection, $user) {

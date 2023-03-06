@@ -78,6 +78,10 @@ class ConnectionManager implements ConnectionManagerContract
                     $controlConnection = new ControlConnection($connection, $host, $subdomain, $clientId, $serverHost, $authToken);
                     $this->storeControlConnection($controlConnection);
                     return $controlConnection;
+                }, function ($e) {
+                    $message = $e->getMessage();
+                    $ex = new \Exception("Failed to generate subdomain: $message.", 0, $e);
+                    return \React\Promise\reject($ex);
                 });
         }
     }
