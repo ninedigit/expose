@@ -4,5 +4,5 @@ namespace App\Contracts;
 
 interface SubdomainGenerator
 {
-    public function generateSubdomain(): string;
+    public function generateSubdomain(array $queryParams): string;
 }

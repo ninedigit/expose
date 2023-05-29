@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class RandomSubdomainGenerator implements SubdomainGenerator
 {
-    public function generateSubdomain(): string
+    public function generateSubdomain(array $queryParams): string
     {
         return strtolower(Str::random(10));
     }
