@@ -201,6 +201,13 @@ class ControlMessageController implements MessageComponentInterface
                         'client_id' => $connectionInfo->client_id,
                     ],
                 ]));
+            }, function (\Throwable $exception) use ($connection) {
+                $connection->send(json_encode([
+                    'event' => 'error',
+                    'data' => [
+                        'message' => $exception->getMessage()
+                    ],
+                ]));
             });
     }
 
