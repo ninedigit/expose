@@ -210,7 +210,8 @@ class ControlMessageController implements MessageComponentInterface
                             'name' => $exception->getGeneratorName(),
                             'instance' => get_class($exception),
                             'code' => $exception->getCode(),
-                            'message' => $exception->getMessage()
+                            'message' => $exception->getMessage(),
+                            'data' => $exception->getData()
                         ],
                     ]));
                 } else {
