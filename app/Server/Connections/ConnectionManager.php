@@ -8,6 +8,7 @@ use App\Contracts\StatisticsCollector;
 use App\Contracts\SubdomainGenerator;
 use App\Http\QueryParameters;
 use App\Server\Exceptions\NoFreePortAvailable;
+use App\Server\Exceptions\SubdomainGeneratorException;
 use Exception;
 use Ratchet\ConnectionInterface;
 use React\EventLoop\LoopInterface;
@@ -65,9 +66,13 @@ class ConnectionManager implements ConnectionManagerContract
         {
             $subdomain ??= $this->subdomainGenerator->generateSubdomain($queryParams);
         }
+        catch (SubdomainGeneratorException $error)
+        {
+            throw $error;
+        }
         catch (\Throwable $error)
         {
-            throw new Exception("Failed to generate a subdomain: {$error->getMessage()}", 0, $error);
+            throw new SubdomainGeneratorException($error->getMessage(), get_class($this->subdomainGenerator), 0, $error);
         }
 
         $storedConnection = new ControlConnection(

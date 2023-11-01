@@ -9,6 +9,7 @@ use App\Contracts\UserRepository;
 use App\Http\QueryParameters;
 use App\Server\Configuration;
 use App\Server\Exceptions\NoFreePortAvailable;
+use App\Server\Exceptions\SubdomainGeneratorException;
 use Illuminate\Support\Arr;
 use Ratchet\ConnectionInterface;
 use Ratchet\WebSocket\MessageComponentInterface;
@@ -202,12 +203,26 @@ class ControlMessageController implements MessageComponentInterface
                     ],
                 ]));
             }, function (\Throwable $exception) use ($connection) {
-                $connection->send(json_encode([
-                    'event' => 'error',
-                    'data' => [
-                        'message' => $exception->getMessage()
-                    ],
-                ]));
+                if ($exception instanceof SubdomainGeneratorException) {
+                    $connection->send(json_encode([
+                        'event' => 'subdomainGeneratorError',
+                        'data' => [
+                            'name' => $exception->getGeneratorName(),
+                            'instance' => get_class($exception),
+                            'code' => $exception->getCode(),
+                            'message' => $exception->getMessage()
+                        ],
+                    ]));
+                } else {
+                    $connection->send(json_encode([
+                        'event' => 'error',
+                        'data' => [
+                            'instance' => get_class($exception),
+                            'message' => $exception->getMessage(),
+                            'code' => $exception->getCode()
+                        ],
+                    ]));
+                }
             });
     }
 
