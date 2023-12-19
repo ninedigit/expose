@@ -97,6 +97,14 @@ class ControlMessageController implements MessageComponentInterface
         $httpConnection->send($response);
     }
 
+    protected function ping(ConnectionInterface $connection, $data)
+    {
+        $connection->send(json_encode([
+            'event' => 'pong',
+            'data' => $data,
+        ]));
+    }
+
     protected function authenticate(ConnectionInterface $connection, $data)
     {
         if (! isset($data->subdomain)) {

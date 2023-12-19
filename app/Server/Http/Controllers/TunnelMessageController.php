@@ -57,7 +57,9 @@ class TunnelMessageController extends Controller
 
         if (is_null($controlConnection)) {
             $httpConnection->send(
-                respond_html($this->getView($httpConnection, 'server.errors.404', ['subdomain' => $subdomain]), 404)
+                $request->expectsJson() ?
+                    respond_json(['error' => "The tunnel '$subdomain' does not exist", 'errorCode' => 1], 404) :
+                    respond_html($this->getView($httpConnection, 'server.errors.404', ['subdomain' => $subdomain]), 404)
             );
             $httpConnection->close();
 
