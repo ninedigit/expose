@@ -134,6 +134,7 @@ class ControlMessageController implements MessageComponentInterface
                         'event' => 'authenticationFailed',
                         'data' => [
                             'message' => config('expose.admin.messages.maximum_connection_count'),
+                            'reason' => 'max_connection_count'
                         ],
                     ]));
                     $connection->close();
@@ -154,6 +155,7 @@ class ControlMessageController implements MessageComponentInterface
                     'event' => 'authenticationFailed',
                     'data' => [
                         'message' => config('expose.admin.messages.invalid_auth_token'),
+                        'reason' => 'invalid_auth_token'
                     ],
                 ]));
                 $connection->close();
@@ -248,6 +250,7 @@ class ControlMessageController implements MessageComponentInterface
                 'event' => 'authenticationFailed',
                 'data' => [
                     'message' => config('expose.admin.messages.no_free_tcp_port_available'),
+                    'reason' => 'no_free_tcp_port_available'
                 ],
             ]));
             $connection->close();
@@ -345,6 +348,7 @@ class ControlMessageController implements MessageComponentInterface
                             'event' => 'authenticationFailed',
                             'data' => [
                                 'message' => config('expose.admin.messages.custom_domain_unauthorized').PHP_EOL,
+                                'reason' => 'custom_domain_unauthorized'
                             ],
                         ]));
                         $connection->close();
@@ -373,6 +377,7 @@ class ControlMessageController implements MessageComponentInterface
                 'event' => 'error',
                 'data' => [
                     'message' => config('expose.admin.messages.custom_subdomain_unauthorized').PHP_EOL,
+                    'reason' => 'custom_subdomain_unauthorized'
                 ],
             ]));
 
@@ -435,6 +440,7 @@ class ControlMessageController implements MessageComponentInterface
                 'event' => 'authenticationFailed',
                 'data' => [
                     'message' => config('expose.admin.messages.tcp_port_sharing_disabled'),
+                    'reason' => 'tcp_port_sharing_disabled'
                 ],
             ]));
             $connection->close();
@@ -447,6 +453,7 @@ class ControlMessageController implements MessageComponentInterface
                 'event' => 'authenticationFailed',
                 'data' => [
                     'message' => config('expose.admin.messages.tcp_port_sharing_unauthorized'),
+                    'reason' => 'tcp_port_sharing_unauthorized'
                 ],
             ]));
             $connection->close();
