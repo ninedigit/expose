@@ -21,9 +21,9 @@
         "laravel-zero/phar-updater": "^1.2"
     },
     "require-dev": {
-        "cboden/ratchet": "^0.4.4",
-        "ratchet/rfc6455": "^0.3",
-        "ratchet/pawl": "^0.3.5",
+        "cboden/ratchet": "dev-master#2b96bb359bdc82a6ca4c3b292681bc62e81ae454",
+        "ratchet/rfc6455": "dev-master#82760a76162a818ef14c6f78e6b96068748834d3",
+        "ratchet/pawl": "dev-master#f8d960527aea23f47fd192b560be68bc1290287b",
         "clue/block-react": "^1.4",
         "clue/reactphp-sqlite": "dev-modular-worker-for-phar-support",
         "guzzlehttp/guzzle": "^7.4",
@@ -74,6 +74,14 @@
         {
             "type": "git",
             "url": "https://github.com/beyondcode/Ratchet"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/beyondcode/RFC6455"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/beyondcode/pawl"
         },
         {
             "type": "git",
