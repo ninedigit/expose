@@ -22,6 +22,8 @@
     },
     "require-dev": {
         "cboden/ratchet": "dev-master",
+        "ratchet/pawl": "dev-master",
+        "ratchet/rfc6455": "dev-master",
         "clue/block-react": "^1.4",
         "clue/reactphp-sqlite": "dev-modular-worker-for-phar-support",
         "guzzlehttp/guzzle": "^7.4",
@@ -37,7 +39,6 @@
         "nikic/php-parser": "^v4.10",
         "nyholm/psr7": "^1.3",
         "phpunit/phpunit": "^9.4.3",
-        "ratchet/pawl": "^0.3.5",
         "react/http": "^1.1.0",
         "react/socket": "^1.6",
         "react/stream": "^1.1.1",
