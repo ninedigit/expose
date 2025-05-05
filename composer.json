@@ -21,9 +21,9 @@
         "laravel-zero/phar-updater": "^1.2"
     },
     "require-dev": {
-        "cboden/ratchet": "dev-master",
-        "ratchet/pawl": "dev-master",
-        "ratchet/rfc6455": "dev-master",
+        "cboden/ratchet": "^0.4.4",
+        "ratchet/rfc6455": "^0.3",
+        "ratchet/pawl": "^0.3.5",
         "clue/block-react": "^1.4",
         "clue/reactphp-sqlite": "dev-modular-worker-for-phar-support",
         "guzzlehttp/guzzle": "^7.4",
