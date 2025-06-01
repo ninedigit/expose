@@ -21,11 +21,12 @@
         "laravel-zero/phar-updater": "^1.2"
     },
     "require-dev": {
+        "clue/reactphp-sqlite": "dev-modular-worker-for-phar-support#b7bf11bca90d0bd18ca3539e3f41eab2b0d347e1",
         "cboden/ratchet": "dev-master#2b96bb359bdc82a6ca4c3b292681bc62e81ae454",
         "ratchet/rfc6455": "dev-master#82760a76162a818ef14c6f78e6b96068748834d3",
         "ratchet/pawl": "dev-master#f8d960527aea23f47fd192b560be68bc1290287b",
+        "octoper/cuzzle": "dev-master#ddfeb5b0a1f2f53183c3278febd7267191ec6c60",
         "clue/block-react": "^1.4",
-        "clue/reactphp-sqlite": "dev-modular-worker-for-phar-support",
         "guzzlehttp/guzzle": "^7.4",
         "guzzlehttp/psr7": "^1.7",
         "illuminate/log": "^9.0",
@@ -35,7 +36,6 @@
         "laminas/laminas-http": "^2.13",
         "laravel-zero/framework": "^9.0",
         "mockery/mockery": "^1.4.2",
-        "octoper/cuzzle": "dev-master",
         "nikic/php-parser": "^v4.10",
         "nyholm/psr7": "^1.3",
         "phpunit/phpunit": "^9.4.3",
